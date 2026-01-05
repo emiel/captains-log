@@ -1,0 +1,34 @@
+[project]
+name = "captains-log"
+version = "0.1.0"
+description = "Captain's Log"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "typer>=0.21.0",
+]
+
+[tool.ruff]
+# The default is 88. We just list it here for clarity.
+line-length = 88
+
+[tool.ruff.format]
+# Ruff formats mostly like Black but with some deviations. See
+# https://docs.astral.sh/ruff/formatter/black/ for details.
+
+[tool.ruff.lint]
+# Selected linting rules (check `ruff linter`). The default is ["E4", "E7",
+# "E9", "F"].
+select = [
+  "E4",  # pycodestyle
+  "E7",  # pycodestyle
+  "E9",  # pycodestyle
+  "F",  # pycodestyle
+  "I",  # isort
+  "UP",  # pypugrade
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.14.10",
+]
