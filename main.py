@@ -1,14 +1,12 @@
 #!/usr/bin/env -S uv run --script
 
+import argparse
 import datetime as dt
 import getpass
 import random
 import string
 from collections.abc import Iterable
 from pathlib import Path
-from typing import Annotated
-
-import typer
 
 
 def _get_weekdays_for(date: dt.date) -> Iterable[dt.date]:
@@ -71,15 +69,21 @@ def _init_log(path: Path, buf: str) -> None:
         file.write(buf)
 
 
-def main(log_dir: Annotated[Path, typer.Argument()]) -> None:
-    if not log_dir.is_dir():
-        print(f"Directory {log_dir} does not exist")
-        raise typer.Abort()
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Captain's Log")
+    parser.add_argument("log_dir", type=Path, help="Log directory")
+    args = parser.parse_args()
+
+    if not args.log_dir.exists():
+        parser.exit(status=1, message=f"Path {args.log_dir} does not exist\n")
+
+    if not args.log_dir.is_dir():
+        parser.exit(status=1, message=f"Path {args.log_dir} is not a directory\n")
 
     today = dt.date.today()
     template = _get_template(date=today)
 
-    path = log_dir / _get_log_path(date=today)
+    path = args.log_dir / _get_log_path(date=today)
 
     if not path.exists():
         _init_log(path=path, buf=template)
@@ -88,4 +92,4 @@ def main(log_dir: Annotated[Path, typer.Argument()]) -> None:
 
 
 if __name__ == "__main__":
-    typer.run(main)
+    main()

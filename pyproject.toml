@@ -4,9 +4,6 @@ version = "0.1.0"
 description = "Captain's Log"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = [
-    "typer>=0.21.0",
-]
 
 [tool.ruff]
 # The default is 88. We just list it here for clarity.
